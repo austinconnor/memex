@@ -1,2 +1,6 @@
-# memex
-Linux Memory Extractor and Process Information Analytics
+# MemEx
+Program for automated Linux memory extraction and process analysis
+Intended to use for Linux malware analysis.
+
+# Usage
+
