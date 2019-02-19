@@ -1,6 +1,7 @@
 # MemEx
-Program for automated Linux memory extraction and process analysis
-Intended to use for Linux malware analysis.
+Program for automated Linux memory extraction and process analysis<br>
+Intended to use for Linux malware analysis.<br>
+### NOTE: This has only been tested on Ubuntu
 
 # Usage
 ```
