@@ -9,13 +9,13 @@ spids = []
 volurl = "https://github.com/volatilityfoundation/volatility.git"
 limeurl = "https://github.com/504ensicsLabs/LiME.git"
 
+profileName = "TEST-PROFILE"
+
 def main():
     #filename = sys.argv[1]
     #p = subprocess.Popen("./" + filename + " & echo $!", stdout=subprocess.PIPE)
-    
-
     makeProfile()
-    
+    #print(str(os.path.isdir("/volatility")))
     
 def getInfo(pid): #gets information about a process
 
@@ -54,8 +54,8 @@ def getNewProcess():
     
 def getUser(): #gets the name of the user
 
-    name = str(subprocess.Popen("whoami", stdout=subprocess.PIPE).stdout.read())
-    name = str(name.split('\\n')[0]).split()[0][2:]
+    name = str(subprocess.Popen("whoami", stdout=subprocess.PIPE).stdout.read())[2:-3]
+    print(name)
     
     return name
     
@@ -65,13 +65,21 @@ def getDifference(l1, l2):
 
 def makeProfile():
     #Getting Kernel version: uname -r
+    volpath = str("/home/" + getUser() + "/volatility/")
+    profilePath = volpath + "volatility/plugins/overlays/linux/"
+    modulePath = volpath + "tools/linux/module.dwarf"
+    kv = str(subprocess.Popen(["uname","-r"], stdout=subprocess.PIPE).stdout.read())[2:-3]
 
-    kv = str(subprocess.Popen(["uname","-r"], stdout=subprocess.PIPE).stdout.read())
-    kv = kv[2:-3] #trimming the kernel version name
-    print(kv)
-    print(os.path.isdir("/home/" + getUser() + "/scripts/memex"))
+    if(not os.path.isdir(volpath)):
+        p = subprocess.Popen(["git", "clone", volurl, "/home/" + getUser() + "/"])
     
-
+    p = subprocess.Popen(["sudo", "zip", volpath + "volatility/plugins/overlays/linux/" + profileName, modulePath, "/boot/System.map-" + kv])
+    print("Zipping Complete!")
+    print("Showing Volatility info...")
+    p = subprocess.Popen(["python", volpath + "vol.py", "--info"])
+    
+    print("Profile Made! Type 'sudo volatility --info' ")
+    
 
 if __name__ == ("__main__"):
     main()
