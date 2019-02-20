@@ -5,5 +5,5 @@ Intended to use for Linux malware analysis.<br>
 
 # Usage
 ```
-sudo python3 memex.py [-f <filename>] [-V verbose] [-h or --help]
+python3 memex.py [-f <filename>] [-V verbose] [-h or --help]
 ```
