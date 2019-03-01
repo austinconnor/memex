@@ -49,8 +49,6 @@ def getInfo(pid): #gets information about a process
             break
 
 
-    
-
 #made to be used in "getInfo" function
 def trigger(pcpu, pram): # detects spikes in ram/cpu usage
 
