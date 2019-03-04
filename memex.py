@@ -73,7 +73,7 @@ def trigger(pcpu, pram): # detects spikes in ram/cpu usage
 def getNewProcess(filename):
 
     command = "ps -aux | grep \"" + filename + "\""
-    out = str(os.popen(command).readlines())[2:-4]
+    out = str(os.popen(command).readlines()).split("\n")[0]
     
     return out
     
