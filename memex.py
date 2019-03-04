@@ -20,7 +20,7 @@ def main():
 
     filename = str(sys.argv[1])
     pid = getNewProcess(filename)
-    getInfo(pid)
+    #getInfo(pid)
     
 def getInfo(pid): #gets information about a process
 
@@ -38,11 +38,17 @@ def getInfo(pid): #gets information about a process
     
     while(True):
         p = subprocess.Popen(["ps", "-p", str(pid), "-o", "%cpu,%mem"], stdout=subprocess.PIPE)
-        pcpu = str(p.communicate()).split(' ')[2]
+        if(len(str(p.communicate()).split(' ')) < 2):
+            pcpu = str(0)
+        else:
+            pcpu = str(p.communicate()).split(' ')[2]
         print(pcpu)
         #print("CPU USAGE %" + " = " + pcpu) #prints CPU Usage
         p = subprocess.Popen(["ps", "-p", str(pid), "-o", "%cpu,%mem"], stdout=subprocess.PIPE)
-        pram = str(p.communicate()).split(' ')[4][0:3]
+        if(len(str(p.communicate()).split(' ')) < 2):
+            pram = str(0)
+        else:
+            pram = str(p.communicate()).split(' ')[4][0:3]
         print(pram)
         #print("RAM USAGE %" + " = " + pram) #prints RAM usage
         if(trigger(pcpu, pram) == 1 or trigger(pcpu,pram) == 2):
