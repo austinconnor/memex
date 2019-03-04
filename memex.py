@@ -4,6 +4,7 @@ import click
 import subprocess
 import sys
 import os
+import time
 
 pids = []
 spids = []
@@ -42,6 +43,7 @@ def getInfo(pid): #gets information about a process
         if(len(str(p.communicate()).split(' ')) < 2):
             pcpu = str(0)
         else:
+	    p = subprocess.Popen(["ps", "-p", str(pid), "-o", "%cpu,%mem"], stdout=subprocess.PIPE)
             pcpu = str(p.communicate()).split(' ')[2]
         print(pcpu)
         #print("CPU USAGE %" + " = " + pcpu) #prints CPU Usage
@@ -49,6 +51,7 @@ def getInfo(pid): #gets information about a process
         if(len(str(p.communicate()).split(' ')) < 2):
             pram = str(0)
         else:
+            p = subprocess.Popen(["ps", "-p", str(pid), "-o", "%cpu,%mem"], stdout=subprocess.PIPE)
             pram = str(p.communicate()).split(' ')[4][0:3]
         print(pram)
         #print("RAM USAGE %" + " = " + pram) #prints RAM usage
@@ -76,10 +79,13 @@ def trigger(pcpu, pram): # detects spikes in ram/cpu usage
 
 
 def getNewProcess(filename):
-
+    
+    p = subprocess.Popen(["./" + filename], stdout=subprocess.PIPE)
+    time.sleep(3) 
     command = "ps -aux | grep \"" + filename + "\""
-    out = str(os.popen(command).readlines()).split(" ")
+    out = os.popen(command).readlines()[2].split(" ")
     out = list(filter(None, out))[1]
+    
     
     return out
     
