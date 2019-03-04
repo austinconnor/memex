@@ -20,7 +20,8 @@ def main():
 
     filename = str(sys.argv[1])
     pid = getNewProcess(filename)
-    #getInfo(pid)
+    
+    getInfo(pid)
     
 def getInfo(pid): #gets information about a process
 
@@ -77,7 +78,8 @@ def trigger(pcpu, pram): # detects spikes in ram/cpu usage
 def getNewProcess(filename):
 
     command = "ps -aux | grep \"" + filename + "\""
-    out = str(os.popen(command).readlines()).split("\n")[0]
+    out = str(os.popen(command).readlines()).split(" ")
+    out = list(filter(None, out))[1]
     
     return out
     
